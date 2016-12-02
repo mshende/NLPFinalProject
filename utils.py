@@ -1,6 +1,7 @@
 # Author: Eli Andrew
 
 from enum import Enum
+from nltk.corpus import wordnet
 from nltk.tokenize import word_tokenize
 import pandas as pd
 
@@ -13,6 +14,36 @@ class Transform(Enum):
     tokens = 1
     lemmas = 2
     pos = 3
+
+
+def wn_pos_mapper(tag):
+    # POS mapper to convert the nltk POS tag into the wordnet POS tag
+    # This function is necessary because the nltk pos_tag method is used
+    # for the pos tagging while WordNetLemmatizer is used for the lemmatization.
+    # Therefore the nltk POS tag must be mapped to the WordNet POS tag which will
+    # be used as the input for the WordNetLemmatizer
+
+    # Input arguments are:
+    #   tag: the POS tag that is output from the nltk.pos_tag method
+    # Output:
+    #   WordNet POS tag mapped from the nltk POS tag
+
+    # Example:
+    # Input tag: N
+    # Output tag: wordnet.NOUN
+
+    if tag.startswith('J'):
+        return wordnet.ADJ
+    elif tag.startswith('V'):
+        return wordnet.VERB
+    elif tag.startswith('N'):
+        return wordnet.NOUN
+    elif tag.startswith('R'):
+        return wordnet.ADV
+    elif tag.startswith('S'):
+        return wordnet.ADJ_SAT
+    else:
+        return ''
 
 
 def process_file(input_file, transform_option):
@@ -57,7 +88,7 @@ def process_file(input_file, transform_option):
         processed_output.append((entry["Sentiment"], entry_phrase_tokens))
 
     if transform_option == Transform.none:
-        return processed_output
+        return [sentiment for sentiment, tokens in processed_output]
     elif transform_option == Transform.tokens:
         return processed_output
     elif transform_option == Transform.lemmas:
