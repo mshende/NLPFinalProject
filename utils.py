@@ -18,6 +18,42 @@ class Transform(Enum):
     pos = 3
 
 
+def print_to_file(data, transform_option):
+    # Print function to print the given data in the format specified by the transform option
+
+    # Input arguments are:
+    #   data: output from the process_file function
+    #   transform_option: Transform Enum indicating the format of the input
+    # Output:
+    #   output_XXX.txt: output file indicating the transform option that was passed in that is formatted
+    #                   according to the format specified by the transform option
+
+    # Example:
+    # Input: data = [[(2, [demonstrating, the, adage]), (2, [demonstrating])], [(2, [a, bit, thin])]]
+    #        transform_option = Transform.tokens
+    # Output: output_tokens =
+    #   2, demonstrating, the, adage
+    #   2, demonstrating,
+    #
+    #   2, a, bit, thin
+
+    if transform_option == Transform.none:
+        return
+    elif transform_option == Transform.tokens:
+        output_file = open("output_tokens.txt", "w+")
+        for sentence in data:
+            print(sentence)
+            for sentiment, tokens in sentence:
+                print(sentiment, tokens)
+                output_file.write(str(sentiment) + ",")
+                for index in range(len(tokens)):
+                    output_file.write(tokens[index])
+                    if index < len(tokens) - 1:
+                        output_file.write(",")
+                output_file.write("\n")
+            output_file.write("\n")
+
+
 def wn_pos_mapper(tag):
     # POS mapper to convert the nltk POS tag into the wordnet POS tag
     # This function is necessary because the nltk pos_tag method is used
@@ -71,43 +107,53 @@ def process_file(input_file, transform_option):
     # input_file contents:
     #   11  1   demonstrating the adage 2
     #   12  1   demonstrating 2
+    #   13  2   a bit thin 2
     # output with transform_option = none
-    #   [(2, demonstrating the adage), (2, demonstrating)]
+    #   [[(2, demonstrating the adage), (2, demonstrating)], [(2, a bit thin)]]
     # output with transform_option = tokens
-    #   [(2, [demonstrating, the, adage]), (2, [demonstrating])]
+    #   [[(2, [demonstrating, the, adage]), (2, [demonstrating])], [(2, [a, bit, thin])]]
     # output with transform_option = lemmas
-    #   [(2, [demonstrate, the, adage]), (2, [demonstrate])]
+    #   [[(2, [demonstrate, the, adage]), (2, [demonstrate])], [(2, [a, bit, thin])]]
     # output with transform_option = pos
     #   [(2, [(demonstrating, VBG), (the, DET), (adage, NN)]), (2, [(demonstrating, VBG)])]
 
     original_file = pd.read_csv(input_file, sep="\t")
-    filtered_file = original_file.iloc[:, 2:5]
+    filtered_file = original_file.iloc[:, 1:5]
 
     processed_output = []
-
+    last_index = -1
     for entry_index in range(len(filtered_file)):
         entry = filtered_file.iloc[entry_index, :]
-        processed_output.append((entry["Sentiment"], entry["Phrase"]))
+        if last_index < entry["SentenceId"]:
+            last_index += 1
+        if last_index >= len(processed_output):
+            sentence = []
+            processed_output.append(sentence)
+        processed_output[last_index].append((entry["Sentiment"], entry["Phrase"]))
 
     if transform_option == Transform.none:
         return processed_output
     elif transform_option == Transform.tokens:
-        tokenized_output = [(entry[0], word_tokenize(entry[1])) for entry in processed_output]
+        tokenized_output = []
+        for index in range(len(processed_output)):
+            tokenized_output.append([])
+            tokenized_output[index] = [(entry[0], word_tokenize(entry[1])) for entry in processed_output[index]]
         return tokenized_output
-    elif transform_option == Transform.lemmas:
-        lemmatizer = WordNetLemmatizer()
-        for entry in processed_output:
-            tokens = word_tokenize(entry[1])
-            tags = pos_tag(tokens)
-            lemmas = [lemmatizer.lemmatize(tag[0], wn_pos_mapper(tag[1])) for tag in tags]
-            print(lemmas)
-        return processed_output
-    elif transform_option == Transform.pos:
-        tagged_output = [(entry[0], pos_tag(word_tokenize(entry[1]))) for entry in processed_output]
-        return tagged_output
-    else:
-        return []
+    # elif transform_option == Transform.lemmas:
+    #     lemmatizer = WordNetLemmatizer()
+    #     for entry in processed_output:
+    #         tokens = word_tokenize(entry[1])
+    #         tags = pos_tag(tokens)
+    #         lemmas = [lemmatizer.lemmatize(tag[0], wn_pos_mapper(tag[1])) for tag in tags]
+    #         print(lemmas)
+    #     return processed_output
+    # elif transform_option == Transform.pos:
+    #     tagged_output = [(entry[0], pos_tag(word_tokenize(entry[1]))) for entry in processed_output]
+    #     return tagged_output
+    # else:
+    #     return []
 
 
-output = process_file("train.tsv", Transform.lemmas)
-print(output)
+output = process_file("train.tsv", Transform.tokens)
+print_to_file(output, Transform.tokens)
+
