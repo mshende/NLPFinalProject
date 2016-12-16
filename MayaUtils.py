@@ -1,5 +1,5 @@
 # Author: Eli Andrew
-
+# Maya: Changed the bounds for filtered file to 0:4 
 from enum import Enum
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
