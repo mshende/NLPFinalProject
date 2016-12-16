@@ -9,6 +9,13 @@ from MayaUtils import process_file
 from sklearn.feature_extraction.text import CountVectorizer
 import math
 
+class BoWType(Enum):
+    #Option to select type of BoW
+
+    binary = 0
+    frequency = 1
+    tfidf = 2
+
 # word: the word for which we are filling in the term-doc-matrix
 # frequency_dict: dictionary of dictionaries, key-value pairs are
 #                 documents and dictionaries of word frequency for
@@ -24,8 +31,8 @@ def compute_tfidf(word, frequency_dict, doc_number, num_docs, inverse_doc_freq_d
     return(term_frequency * math.log(num_docs / inverse_doc_frequency))
 
 
-def create_words_list():
-    output_tokens = process_file("train.tsv", Transform.tokens)
+def create_words_list(transform_option):
+    output_tokens = process_file("train.tsv", transform_option)
     word_list = []
     for item in output_tokens:
         words = item[1]
@@ -35,8 +42,8 @@ def create_words_list():
     return word_list
 
 
-def create_bag_of_words():
-    word_list = create_words_list()
+def create_bag_of_words(BoW_option, transform_option):
+    word_list = create_words_list(transform_option)
     vectorizer = CountVectorizer(analyzer="word", tokenizer=None,
                                  preprocessor=None, stop_words=None,
                                  max_features=5000)
@@ -47,64 +54,4 @@ def create_bag_of_words():
     print("vocab: ", vocab)
 
 
-# def create_bag_of_words(input_file):
-#     words = []
-#     term_frequency = {}
-#     inverse_doc_frequency = {}
-#     print('beginning processing file')
-#     output_tokens = process_file("train.tsv", Transform.tokens)
-#     print('finished processing file')
-#     doc_number = 0
-#     print('begin iterating over phrases')
-#     for item in output_tokens:
-#         word_list = item[1]
-#         word_freq = {}
-#         for word in word_list:
-#             if word in inverse_doc_frequency:
-#                 inverse_doc_frequency[word] += 1
-#             else:
-#                 inverse_doc_frequency[word] = 1
-#             if word in word_freq:
-#                 word_freq[word] += 1
-#             else:
-#                 word_freq[word] = 1
-#             if word not in words:
-#                 words.append(word)
-#         term_frequency[doc_number] = word_freq
-#         doc_number += 1
-#     print('created list of words and dictionaries')
-            
-#     print('initializing term-doc-matrix')
-#     num_words = len(words)
-#     num_phrases = len(output_tokens)
-#     term_doc = [[0 for i in range(num_words)] for j in range(num_phrases)]
-    
-#     print('begin filling in matrix')
-#     for document in range(num_phrases):
-#         for word in range(num_words):
-#             tf_idf = compute_tfidf(words[word], term_frequency,
-#                                    document, num_phrases, inverse_doc_frequency)
-#             term_doc[document][word] = tf_idf
-#     bag_of_words = pd.DataFrame(term_doc, columns=words)
-#     print(bag_of_words)
-
-    # with open(input_file, 'r') as training:
-    #     original_file = pd.read_csv("train.tsv", sep='\t')
-    #     print(original_file.iloc[0,2])
-    #     training_lines = training.readlines()
-    #     word_dictionary = {}
-    #     index = 0
-    #     for line in training_lines:
-    #         phrase = original_file.iloc[index,0]
-    #         if line != '':
-    #             line = line.strip().split(',')
-    #             for i in range(1, len(line)):
-    #                 if line[i] in word_dictionary:
-    #                     word_dictionary[line[i]].append(phrase)
-    #                 else:
-    #                     word_dictionary[line[i]] = [phrase]
-    #         index+=1
-    #     print(word_dictionary)
-    
-
-create_bag_of_words()
+create_bag_of_words(BoWType.frequency, Transform.tokens)
