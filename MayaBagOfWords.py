@@ -40,17 +40,7 @@ def create_test_list():
     sentence3 = 'Test of the bag of words'
 
     regular_expression_tokenizer = RegexpTokenizer(r'\w+')
-
     clean_train_reviews = [sentence1, sentence2, sentence3]
-
-    # for word in regular_expression_tokenizer.tokenize(sentence1):
-    #     clean_train_reviews.append(word)
-
-    # for word in regular_expression_tokenizer.tokenize(sentence2):
-    #     clean_train_reviews.append(word)
-
-    # for word in regular_expression_tokenizer.tokenize(sentence3):
-    #     clean_train_reviews.append(word)
     return clean_train_reviews
 
 
@@ -63,6 +53,9 @@ def create_bag_of_words(BoW_option, transform_option, stop):
     if transform_option == Transform.lemmas:
         doc_list = pickle.load(open('processed_data_transform_lemmas.pkl', 'rb'))
         sentiment_list = pickle.load(open('sentiments_transform_lemmas.pkl', 'rb'))
+    if transform_option == Transform.pos:
+        doc_list = pickle.load(open('processed_data_transform_pos.pkl', 'rb'))
+        sentiment_list = pickle.load(open('sentiments_transform_pos.pkl', 'rb'))
     print('vectorizing and creating feature vectors')
     if BoW_option == BoWType.frequency:
         vectorizer = CountVectorizer(analyzer="word", tokenizer=None,
@@ -107,16 +100,22 @@ def output_features(feature_set, sentiments, BoW_option, Transform_option):
             output_file = "BoW_frequency_phrase_none.out"
         if Transform_option == Transform.lemmas:
             output_file = "BoW_frequency_phrase_lemmas.out"
+        if Transform_option == Transform.pos:
+            output_file = "BoW_frequency_phrase_pos.out"
     if BoW_option == BoWType.binary:
         if Transform_option == Transform.none:
             output_file = "BoW_binary_phrase_none.out"
         if Transform_option == Transform.lemmas:
             output_file = "BoW_binary_phrase_lemmas.out"
+        if Transform_option == Transform.pos:
+            output_file = "BoW_binary_phrase_pos.out"
     if BoW_option == BoWType.tfidf:
         if Transform_option == Transform.none:
             output_file = "BoW_tfidf_phrase_none.out"
         if Transform_option == Transform.lemmas:
             output_file = "BoW_tfidf_phrase_lemmas.out"
+        if Transform_option == Transform.pos:
+            output_file = "BoW_tfidf_phrase_pos.out"
     with open(output_file, 'aw') as output:
         print('begin writing to file')
         features = np.array(feature_set)
