@@ -10,3 +10,12 @@ Maya:
   
 - output_files/ : directory containing all of the output files of feature vectors. 36 files total, each with a different combination of parameters from the list above.
 - process_data.py: use this to parse the .txt files from Eli's preprocessing stage and extract the sentences to be used in Bag of Words model; generates a list of sentences and a corresponding list of sentiments
+
+Eli:
+
+- utils.py: contains the code used to generate output files for the two datasets. The various formats and output files are:
+  1. dataset_one_lemmas.txt: sentiment and lemmas for Rotten Tomatoes dataset
+  2. dataset_one_pos_filtered.txt: sentiment and words (only nouns, adverbs, adjectives, and verbs) for Rotten Tomatoes dataset
+  3. dataset_one_sentences.txt: sentiment and words for Rotten Tomatoes dataset
+
+
