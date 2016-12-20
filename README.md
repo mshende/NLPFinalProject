@@ -9,3 +9,4 @@ Maya:
   4. number of features: integer value
   
 - output_files/ : directory containing all of the output files of feature vectors. 36 files total, each with a different combination of parameters from the list above.
+- process_data.py: use this to parse the .txt files from Eli's preprocessing stage and extract the sentences to be used in Bag of Words model; generates a list of sentences and a corresponding list of sentiments
