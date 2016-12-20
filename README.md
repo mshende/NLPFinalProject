@@ -13,10 +13,13 @@ Maya:
 
 Eli:
 
-- utils.py: contains the code used to generate output files for the two datasets. The various formats and output files are:
+- utils.py and processing.py: contains the code used to generate output files for the two datasets. The various formats and output files are:
   1. dataset_one_lemmas.txt: sentiment and lemmas for Rotten Tomatoes dataset
   2. dataset_one_pos_filtered.txt: sentiment and words (only nouns, adverbs, adjectives, and verbs) for Rotten Tomatoes dataset
   3. dataset_one_sentences.txt: sentiment and words for Rotten Tomatoes dataset
+  4. dataset_two_lemmas.txt: sentiment and lemmas for Twitter Airline dataset
+  5. dataset_two_pos_filtered.txt: sentiment and words (only nouns, adverbs, adjectives, and verbs) for Twitter Airline dataset
+  6. dataset_two_sentences.txt: sentiment and words for Twitter Airline dataset
 
 
 David: 
