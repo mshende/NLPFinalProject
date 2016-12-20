@@ -3,6 +3,8 @@ NOTE: _english_ means english stopwords removed using SKLearn
       _1000 means 1000 features used
       _2000 means 2000 features used
 
+36 files total
+
 ********* BINARY BAG OF WORDS *********
 ## lemmatization
 output_binary_lemmas_english_1000.out
