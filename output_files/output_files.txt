@@ -3,7 +3,10 @@ NOTE: _english_ means english stopwords removed using SKLearn
       _1000 means 1000 features used
       _2000 means 2000 features used
 
-36 files total
+36 files (dataset one - sentences/phrases)
+36 files (dataset two - twitter data)
+
+72 files total
 
 ********* BINARY BAG OF WORDS *********
 ## lemmatization
@@ -12,17 +15,32 @@ output_binary_lemmas_english_2000.out
 output_binary_lemmas_none_1000.out
 output_binary_lemmas_none_2000.out
 
+twitter_binary_lemmas_english_1000.out
+twitter_binary_lemmas_english_2000.out
+twitter_binary_lemmas_none_1000.out
+twitter_binary_lemmas_none_2000.out
+
 ## no transformation (original sentences) 
 output_binary_none_english_1000.out
 output_binary_none_english_2000.out
 output_binary_none_none_1000.out
 output_binary_none_none_2000.out
 
+twitter_binary_none_english_1000.out
+twitter_binary_none_english_2000.out
+twitter_binary_none_none_1000.out
+twitter_binary_none_none_2000.out
+
 ##POS tagged
 output_binary_pos_english_1000.out
 output_binary_pos_english_2000.out
 output_binary_pos_none_1000.out
 output_binary_pos_none_2000.out
+
+twitter_binary_pos_english_1000.out
+twitter_binary_pos_english_2000.out
+twitter_binary_pos_none_1000.out
+twitter_binary_pos_none_2000.out
 
 ********* FREQUENCY BAG OF WORDS *********
 ##lemmatization
@@ -31,17 +49,32 @@ output_frequency_lemmas_english_2000.out
 output_frequency_lemmas_none_1000.out
 output_frequency_lemmas_none_2000.out
 
+twitter_frequency_lemmas_english_1000.out
+twitter_frequency_lemmas_english_2000.out
+twitter_frequency_lemmas_none_1000.out
+twitter_frequency_lemmas_none_2000.out
+
 ## no transformation (original sentences) 
 output_frequency_none_english_1000.out
 output_frequency_none_english_2000.out
 output_frequency_none_none_1000.out
 output_frequency_none_none_2000.out
 
+twitter_frequency_none_english_1000.out
+twitter_frequency_none_english_2000.out
+twitter_frequency_none_none_1000.out
+twitter_frequency_none_none_2000.out
+
 ##POS tagged
 output_frequency_pos_english_1000.out
 output_frequency_pos_english_2000.out
 output_frequency_pos_none_1000.out
 output_frequency_pos_none_2000.out
+
+twitter_frequency_pos_english_1000.out
+twitter_frequency_pos_english_2000.out
+twitter_frequency_pos_none_1000.out
+twitter_frequency_pos_none_2000.out
 
 ********* TFIDF BAG OF WORDS *********
 ## lemmatization
@@ -50,14 +83,29 @@ output_tfidf_lemmas_english_2000.out
 output_tfidf_lemmas_none_1000.out
 output_tfidf_lemmas_none_2000.out
 
+twitter_tfidf_lemmas_english_1000.out
+twitter_tfidf_lemmas_english_2000.out
+twitter_tfidf_lemmas_none_1000.out
+twitter_tfidf_lemmas_none_2000.out
+
 ## no transformation (original sentences)
 output_tfidf_none_english_1000.out
 output_tfidf_none_english_2000.out
 output_tfidf_none_none_1000.out
 output_tfidf_none_none_2000.out
 
+twitter_tfidf_none_english_1000.out
+twitter_tfidf_none_english_2000.out
+twitter_tfidf_none_none_1000.out
+twitter_tfidf_none_none_2000.out
+
 ## POS tagged
 output_tfidf_pos_english_1000.out
 output_tfidf_pos_english_2000.out
 output_tfidf_pos_none_1000.out
 output_tfidf_pos_none_2000.out
+
+twitter_tfidf_pos_english_1000.out
+twitter_tfidf_pos_english_2000.out
+twitter_tfidf_pos_none_1000.out
+twitter_tfidf_pos_none_2000.out
